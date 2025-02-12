@@ -6,24 +6,30 @@ package mr
 // remember to capitalize all names.
 //
 
-import "os"
-import "strconv"
+import (
+	"os"
+	"strconv"
+)
 
 //
 // example to show how to declare the arguments
 // and reply for an RPC.
 //
 
-type ExampleArgs struct {
-	X int
+type CommitAndQueryTask struct {
+	TaskType   string
+	TaskNumber string
 }
 
-type ExampleReply struct {
-	Y int
+type ReplyTask struct {
+	TaskType   string
+	TaskNumber string
+	FileName   string // 只有map任务此字段才有效
+	NMap       int
+	NReduce    int
 }
 
 // Add your RPC definitions here.
-
 
 // Cook up a unique-ish UNIX-domain socket name
 // in /var/tmp, for the coordinator.
