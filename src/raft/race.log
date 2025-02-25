@@ -1,0 +1,1317 @@
+Test (3A): multiple elections ...
+005384 LOG1 S0 我身份被查
+005387 LOG1 S1 我身份被查
+005387 LOG1 S2 我身份被查
+005388 LOG1 S3 我身份被查
+005389 LOG1 S4 我身份被查
+005389 LOG1 S5 我身份被查
+005390 LOG1 S6 我身份被查
+007065 LOG1 S0 我超时了
+==================
+WARNING: DATA RACE
+Write at 0x00c0001ac0f8 by goroutine 25:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:334 +0x3c
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+
+Previous read at 0x00c0001ac0f8 by goroutine 8:
+  6.5840/raft.(*Raft).ticker()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:410 +0x48
+  6.5840/raft.Make.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x34
+
+Goroutine 25 (running) created at:
+  6.5840/raft.(*Raft).ticker()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x354
+  6.5840/raft.Make.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x34
+
+Goroutine 8 (running) created at:
+  6.5840/raft.Make()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x4f4
+  6.5840/raft.(*config).start1()
+      /Users/Zhuanz/6.5840/src/raft/config.go:322 +0x7b0
+  6.5840/raft.make_config()
+      /Users/Zhuanz/6.5840/src/raft/config.go:101 +0x79c
+  6.5840/raft.TestManyElections3A()
+      /Users/Zhuanz/6.5840/src/raft/test_test.go:95 +0x38
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.(*T).Run.gowrap1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x40
+==================
+007091 LOG1 S0 我身份改为can
+007092 LOG1 S0 我开始选举，最新term为1
+007095 VOTE S0 我正在选举，我给6发消息
+007094 VOTE S0 我正在选举，我给1发消息
+007095 VOTE S0 我正在选举，我给3发消息
+007095 VOTE S0 我正在选举，我给2发消息
+007096 VOTE S0 我正在选举，我给5发消息
+007096 VOTE S0 我正在选举，我给4发消息
+007122 LOG1 S6 收0拉，我term0,vf-1,st1
+==================
+WARNING: DATA RACE
+007122 LOG1 S3 收0拉，我term0,vf-1,st1
+Write at 0x00c0001ac578 by goroutine 38:
+  6.5840/raft.(*Raft).RequestVote()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:185 +0x280
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Previous read at 0x00c0001ac578 by goroutine 20:
+  6.5840/raft.(*Raft).ticker()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:410 +0x48
+007125 LOG1 S4 收0拉，我term0,vf-1,st1
+  6.5840/raft.Make.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x34
+
+Goroutine 38 (running) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+
+Goroutine 20 (running) created at:
+  6.5840/raft.Make()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x4f4
+  6.5840/raft.(*config).start1()
+      /Users/Zhuanz/6.5840/src/raft/config.go:322 +0x7b0
+  6.5840/raft.make_config()
+      /Users/Zhuanz/6.5840/src/raft/config.go:101 +0x79c
+  6.5840/raft.TestManyElections3A()
+      /Users/Zhuanz/6.5840/src/raft/test_test.go:95 +0x38
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.(*T).Run.gowrap1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x40
+==================
+007126 LOG1 S1 收0拉，我term0,vf-1,st1
+007122 LOG1 S5 收0拉，我term0,vf-1,st1
+007123 LOG1 S2 收0拉，我term0,vf-1,st1
+007128 LOG1 S6 我身份改为follower
+007129 LOG1 S2 我身份改为follower
+==================
+WARNING: DATA RACE
+Write at 0x00c0001ac5e8 by goroutine 38:
+  6.5840/raft.(*Raft).RequestVote()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:202 +0x5a0
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Previous read at 0x00c0001ac5e8 by goroutine 20:
+  6.5840/raft.(*Raft).ticker()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:415 +0x148
+  6.5840/raft.Make.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x34
+
+Goroutine 38 (running) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+
+Goroutine 20 (running) created at:
+007128 LOG1 S3 我身份改为follower
+  6.5840/raft.Make()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x4f4
+  6.5840/raft.(*config).start1()
+      /Users/Zhuanz/6.5840/src/raft/config.go:322 +0x7b0
+  6.5840/raft.make_config()
+      /Users/Zhuanz/6.5840/src/raft/config.go:101 +0x79c
+  6.5840/raft.TestManyElections3A()
+      /Users/Zhuanz/6.5840/src/raft/test_test.go:95 +0x38
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.(*T).Run.gowrap1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x40
+==================
+007129 LOG1 S4 我身份改为follower
+007133 LOG1 S6 我投票给0，term为1,我身份为1
+007133 LOG1 S4 我投票给0，term为1,我身份为1
+007133 LOG1 S6 我身份改为follower
+007134 LOG1 S3 我投票给0，term为1,我身份为1
+007129 LOG1 S5 我身份改为follower
+007133 LOG1 S2 我投票给0，term为1,我身份为1
+007135 LOG1 S5 我投票给0，term为1,我身份为1
+007135 LOG1 S2 我身份改为follower
+007136 LOG1 S5 我身份改为follower
+007129 LOG1 S1 我身份改为follower
+007136 LOG1 S1 我投票给0，term为1,我身份为1
+007137 LOG1 S1 我身份改为follower
+007134 LOG1 S4 我身份改为follower
+007135 LOG1 S3 我身份改为follower
+==================
+WARNING: DATA RACE
+Read at 0x00c0001ac338 by goroutine 14:
+  6.5840/raft.(*Raft).ticker()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:410 +0x48
+  6.5840/raft.Make.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x34
+
+Previous write at 0x00c0001ac338 by goroutine 42:
+  6.5840/raft.(*Raft).RequestVote()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:206 +0x74c
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Goroutine 14 (running) created at:
+  6.5840/raft.Make()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x4f4
+  6.5840/raft.(*config).start1()
+      /Users/Zhuanz/6.5840/src/raft/config.go:322 +0x7b0
+  6.5840/raft.make_config()
+      /Users/Zhuanz/6.5840/src/raft/config.go:101 +0x79c
+  6.5840/raft.TestManyElections3A()
+      /Users/Zhuanz/6.5840/src/raft/test_test.go:95 +0x38
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.(*T).Run.gowrap1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x40
+
+Goroutine 42 (running) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+==================
+==================
+WARNING: DATA RACE
+Read at 0x00c0002121a8 by goroutine 26:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:367 +0x280
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Previous write at 0x00c0002121a8 by goroutine 31:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:367 +0x290
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Goroutine 26 (running) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+
+Goroutine 31 (finished) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+007147 TERM S0 我成功当选，term为1
+007156 LOG1 S1 我收到0的心跳,我之前term为1
+007157 LOG1 S1 我为fw,term为1
+007165 LOG1 S2 我收到0的心跳,我之前term为1
+==================
+WARNING: DATA RACE007166 LOG1 S2 我为fw,term为1
+
+Write at 0x00c0002121a8 by goroutine 29:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:367 +0x290
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Previous write at 0x00c0002121a8 by goroutine 28:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:367 +0x290
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Goroutine 29 (running) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+
+Goroutine 28 (finished) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+007170 LOG1 S3 我收到0的心跳,我之前term为1
+==================
+WARNING: DATA RACE
+Write at 0x00c0001ac3a8 by goroutine 49:
+  6.5840/raft.(*Raft).AppendEntries()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:268 +0x21c
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Previous read at 0x00c0001ac3a8 by goroutine 14:
+  6.5840/raft.(*Raft).ticker()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:415 +0x148
+  6.5840/raft.Make.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x34
+
+Goroutine 49 (running) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+
+Goroutine 14 (running) created at:
+  6.5840/raft.Make()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x4f4
+  6.5840/raft.(*config).start1()
+      /Users/Zhuanz/6.5840/src/raft/config.go:322 +0x7b0
+  6.5840/raft.make_config()
+      /Users/Zhuanz/6.5840/src/raft/config.go:101 +0x79c
+  6.5840/raft.TestManyElections3A()
+      /Users/Zhuanz/6.5840/src/raft/test_test.go:95 +0x38
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.(*T).Run.gowrap1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x40
+==================
+007171 LOG1 S3 我为fw,term为1
+007174 LOG1 S4 我收到0的心跳,我之前term为1
+007174 LOG1 S4 我为fw,term为1
+007177 LOG1 S5 我收到0的心跳,我之前term为1
+007177 LOG1 S5 我为fw,term为1
+007180 LOG1 S6 我收到0的心跳,我之前term为1
+007180 LOG1 S6 我为fw,term为1
+==================
+WARNING: DATA RACE
+Read at 0x00c0001ac1b8 by goroutine 10:
+  6.5840/raft.(*Raft).ticker()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:410 +0x48
+  6.5840/raft.Make.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x34
+
+Previous write at 0x00c0001ac1b8 by goroutine 45:
+  6.5840/raft.(*Raft).AppendEntries()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:269 +0x270
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Goroutine 10 (running) created at:
+  6.5840/raft.Make()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x4f4
+  6.5840/raft.(*config).start1()
+      /Users/Zhuanz/6.5840/src/raft/config.go:322 +0x7b0
+  6.5840/raft.make_config()
+      /Users/Zhuanz/6.5840/src/raft/config.go:101 +0x79c
+  6.5840/raft.TestManyElections3A()
+      /Users/Zhuanz/6.5840/src/raft/test_test.go:95 +0x38
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.(*T).Run.gowrap1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x40
+
+Goroutine 45 (finished) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+==================
+==================
+WARNING: DATA RACE
+Read at 0x00c0001ac0f8 by goroutine 8:
+  6.5840/raft.(*Raft).ticker()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:410 +0x48
+  6.5840/raft.Make.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x34
+
+Previous write at 0x00c0001ac0f8 by goroutine 26:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:371 +0x338
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Goroutine 8 (running) created at:
+  6.5840/raft.Make()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x4f4
+  6.5840/raft.(*config).start1()
+      /Users/Zhuanz/6.5840/src/raft/config.go:322 +0x7b0
+  6.5840/raft.make_config()
+      /Users/Zhuanz/6.5840/src/raft/config.go:101 +0x79c
+  6.5840/raft.TestManyElections3A()
+      /Users/Zhuanz/6.5840/src/raft/test_test.go:95 +0x38
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.(*T).Run.gowrap1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x40
+
+Goroutine 26 (finished) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+007608 LOG1 S1 我收到0的心跳,我之前term为1
+007609 LOG1 S1 我为fw,term为1
+007619 LOG1 S2 我收到0的心跳,我之前term为1
+007620 LOG1 S2 我为fw,term为1
+007635 LOG1 S3 我收到0的心跳,我之前term为1
+007635 LOG1 S3 我为fw,term为1
+007645 LOG1 S4 我收到0的心跳,我之前term为1
+007646 LOG1 S4 我为fw,term为1
+007656 LOG1 S5 我收到0的心跳,我之前term为1
+007656 LOG1 S5 我为fw,term为1
+007665 LOG1 S6 我收到0的心跳,我之前term为1
+007665 LOG1 S6 我为fw,term为1
+008624 LOG1 S1 我收到0的心跳,我之前term为1
+008626 LOG1 S1 我为fw,term为1
+008641 LOG1 S2 我收到0的心跳,我之前term为1
+008641 LOG1 S2 我为fw,term为1
+008652 LOG1 S3 我收到0的心跳,我之前term为1
+008652 LOG1 S3 我为fw,term为1
+008659 LOG1 S4 我收到0的心跳,我之前term为1
+008660 LOG1 S4 我为fw,term为1
+008666 LOG1 S5 我收到0的心跳,我之前term为1
+008667 LOG1 S5 我为fw,term为1
+008675 LOG1 S6 我收到0的心跳,我之前term为1
+008675 LOG1 S6 我为fw,term为1
+009632 LOG1 S1 我收到0的心跳,我之前term为1
+009633 LOG1 S1 我为fw,term为1
+009648 LOG1 S2 我收到0的心跳,我之前term为1
+009649 LOG1 S2 我为fw,term为1
+009660 LOG1 S3 我收到0的心跳,我之前term为1
+009660 LOG1 S3 我为fw,term为1
+009670 LOG1 S4 我收到0的心跳,我之前term为1
+009670 LOG1 S4 我为fw,term为1
+009679 LOG1 S5 我收到0的心跳,我之前term为1
+009679 LOG1 S5 我为fw,term为1
+009687 LOG1 S6 我收到0的心跳,我之前term为1
+009687 LOG1 S6 我为fw,term为1
+010171 LOG1 S0 我身份被查
+010173 LOG1 S1 我身份被查
+010174 LOG1 S2 我身份被查
+010175 LOG1 S3 我身份被查
+010175 LOG1 S4 我身份被查
+010176 LOG1 S5 我身份被查
+010176 LOG1 S6 我身份被查
+015570 LOG1 S2 我身份被查
+015571 LOG1 S3 我身份被查
+015571 LOG1 S4 我身份被查
+015572 LOG1 S6 我身份被查
+016494 LOG1 S6 我超时了
+016495 LOG1 S6 我身份改为can
+016496 LOG1 S6 我开始选举，最新term为2
+016496 VOTE S6 我正在选举，我给1发消息
+016497 VOTE S6 我正在选举，我给3发消息
+016497 VOTE S6 我正在选举，我给2发消息
+016497 VOTE S6 我正在选举，我给4发消息
+016497 VOTE S6 我正在选举，我给0发消息
+016497 VOTE S6 我正在选举，我给5发消息
+016502 LOG1 S2 收6拉，我term1,vf0,st1
+016502 LOG1 S4 收6拉，我term1,vf0,st1
+016502 LOG1 S3 收6拉，我term1,vf0,st1
+016503 LOG1 S4 我身份改为follower
+016502 LOG1 S2 我身份改为follower
+016503 LOG1 S3 我身份改为follower
+016503 LOG1 S2 我投票给6，term为2,我身份为1
+016504 LOG1 S3 我投票给6，term为2,我身份为1
+016504 LOG1 S3 我身份改为follower
+016503 LOG1 S4 我投票给6，term为2,我身份为1
+016504 LOG1 S2 我身份改为follower
+016505 LOG1 S4 我身份改为follower
+016509 TERM S6 我成功当选，term为2
+017180 LOG1 S1 我超时了
+017182 LOG1 S1 我身份改为can
+017182 LOG1 S1 我开始选举，最新term为2
+017183 VOTE S1 我正在选举，我给0发消息
+017183 VOTE S1 我正在选举，我给3发消息
+017183 VOTE S1 我正在选举，我给4发消息
+017183 VOTE S1 我正在选举，我给5发消息
+017183 VOTE S1 我正在选举，我给6发消息
+017183 VOTE S1 我正在选举，我给2发消息
+017266 LOG1 S5 我超时了
+017268 LOG1 S5 我身份改为can
+017268 LOG1 S5 我开始选举，最新term为2
+017269 VOTE S5 我正在选举，我给1发消息
+017270 VOTE S5 我正在选举，我给2发消息
+017271 VOTE S5 我正在选举，我给0发消息
+017270 VOTE S5 我正在选举，我给4发消息
+017271 VOTE S5 我正在选举，我给6发消息
+017270 VOTE S5 我正在选举，我给3发消息
+020622 LOG1 S2 我身份被查
+020623 LOG1 S3 我身份被查
+020624 LOG1 S4 我身份被查
+020624 LOG1 S6 我身份被查
+020728 LOG1 S1 我收到0的心跳,我之前term为2
+021107 LOG1 S0 我收到6的心跳,我之前term为1
+021108 LOG1 S0 我为fw,term为2
+021116 LOG1 S1 我收到6的心跳,我之前term为2
+021118 LOG1 S1 我为fw,term为2
+022126 LOG1 S0 我收到6的心跳,我之前term为2
+022127 LOG1 S0 我为fw,term为2
+022142 LOG1 S1 我收到6的心跳,我之前term为2
+022143 LOG1 S1 我为fw,term为2
+023128 LOG1 S0 我收到6的心跳,我之前term为2
+023129 LOG1 S0 我为fw,term为2
+023137 LOG1 S1 我收到6的心跳,我之前term为2
+023138 LOG1 S1 我为fw,term为2
+023945 LOG1 S2 我超时了
+023948 LOG1 S2 我身份改为can
+023948 LOG1 S2 我开始选举，最新term为3
+023950 VOTE S2 我正在选举，我给1发消息
+023950 VOTE S2 我正在选举，我给6发消息
+023951 VOTE S2 我正在选举，我给0发消息
+023950 VOTE S2 我正在选举，我给4发消息
+023950 VOTE S2 我正在选举，我给3发消息
+023950 VOTE S2 我正在选举，我给5发消息
+024137 LOG1 S0 我收到6的心跳,我之前term为2
+024139 LOG1 S0 我为fw,term为2
+024154 LOG1 S1 我收到6的心跳,我之前term为2
+024156 LOG1 S1 我为fw,term为2
+024370 LOG1 S3 我超时了
+024372 LOG1 S3 我身份改为can
+024373 LOG1 S3 我开始选举，最新term为3
+024374 VOTE S3 我正在选举，我给6发消息
+024375 VOTE S3 我正在选举，我给1发消息
+024375 VOTE S3 我正在选举，我给5发消息
+024374 VOTE S3 我正在选举，我给0发消息
+024374 VOTE S3 我正在选举，我给2发消息
+024375 VOTE S3 我正在选举，我给4发消息
+024438 LOG1 S4 我超时了
+024440 LOG1 S4 我身份改为can
+024441 LOG1 S4 我开始选举，最新term为3
+024442 VOTE S4 我正在选举，我给0发消息
+024443 VOTE S4 我正在选举，我给2发消息
+024443 VOTE S4 我正在选举，我给3发消息
+024442 VOTE S4 我正在选举，我给1发消息
+024443 VOTE S4 我正在选举，我给5发消息
+024442 VOTE S4 我正在选举，我给6发消息
+025063 LOG1 S5 我超时了
+025065 LOG1 S5 我身份改为can
+025066 LOG1 S5 我开始选举，最新term为3
+025067 VOTE S5 我正在选举，我给0发消息
+025068 VOTE S5 我正在选举，我给2发消息
+025068 VOTE S5 我正在选举，我给6发消息
+025068 VOTE S5 我正在选举，我给4发消息
+025067 VOTE S5 我正在选举，我给3发消息
+025067 VOTE S5 我正在选举，我给1发消息
+025076 LOG1 S0 收5拉，我term2,vf0,st1
+025077 LOG1 S0 我身份改为follower
+025077 LOG1 S6 收5拉，我term2,vf6,st0
+025078 LOG1 S6 我身份改为follower
+025078 LOG1 S0 我投票给5，term为3,我身份为1
+025079 LOG1 S6 我投票给5，term为3,我身份为1
+025079 LOG1 S0 我身份改为follower
+025080 LOG1 S6 我身份改为follower
+025082 LOG1 S1 收5拉，我term2,vf1,st1
+025083 LOG1 S1 我身份改为follower
+025083 LOG1 S1 我投票给5，term为3,我身份为1
+025084 LOG1 S1 我身份改为follower
+025091 TERM S5 我成功当选，term为3
+025099 LOG1 S0 我收到5的心跳,我之前term为3
+025099 LOG1 S0 我为fw,term为3
+025111 LOG1 S1 我收到5的心跳,我之前term为3
+025111 LOG1 S1 我为fw,term为3
+025624 LOG1 S0 我收到5的心跳,我之前term为3
+025626 LOG1 S0 我为fw,term为3
+025642 LOG1 S1 我收到5的心跳,我之前term为3
+025642 LOG1 S1 我为fw,term为3
+==================
+WARNING: DATA RACE
+Read at 0x00c0001ac100 by goroutine 6:
+  6.5840/raft.(*Raft).GetState()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:101 +0x30
+  6.5840/raft.(*config).checkOneLeader()
+      /Users/Zhuanz/6.5840/src/raft/config.go:438 +0x220
+  6.5840/raft.TestManyElections3A()
+      /Users/Zhuanz/6.5840/src/raft/test_test.go:114 +0x178
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.(*T).Run.gowrap1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x40
+
+Previous write at 0x00c0001ac100 by goroutine 271:
+  6.5840/raft.(*Raft).AppendEntries()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:270 +0x298
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Goroutine 6 (running) created at:
+  testing.(*T).Run()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x5e0
+  testing.runTests.func1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:2168 +0x80
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.runTests()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:2166 +0x6e0
+  testing.(*M).Run()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:2034 +0xb74
+  main.main()
+      _testmain.go:99 +0x110
+
+Goroutine 271 (finished) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+==================
+025704 LOG1 S0 我身份被查
+025705 LOG1 S1 我身份被查
+025706 LOG1 S5 我身份被查
+025706 LOG1 S6 我身份被查
+026627 LOG1 S0 我收到5的心跳,我之前term为3
+026629 LOG1 S0 我为fw,term为3
+027635 LOG1 S0 我收到5的心跳,我之前term为3
+027637 LOG1 S0 我为fw,term为3
+028650 LOG1 S0 我收到5的心跳,我之前term为3
+028652 LOG1 S0 我为fw,term为3
+029661 LOG1 S0 我收到5的心跳,我之前term为3
+029663 LOG1 S0 我为fw,term为3
+030642 LOG1 S0 我收到5的心跳,我之前term为3
+030644 LOG1 S0 我为fw,term为3
+031118 LOG1 S2 我超时了
+031121 LOG1 S2 我身份改为can
+031124 LOG1 S2 我开始选举，最新term为4
+031125 VOTE S2 我正在选举，我给5发消息
+031127 VOTE S2 我正在选举，我给4发消息
+031129 VOTE S2 我正在选举，我给6发消息
+031130 VOTE S2 我正在选举，我给1发消息
+031133 VOTE S2 我正在选举，我给0发消息
+031129 VOTE S2 我正在选举，我给3发消息
+031135 LOG1 S5 收2拉，我term3,vf5,st0
+031136 LOG1 S5 我身份改为follower
+==================
+WARNING: DATA RACE
+Write at 0x00c0001ac4c0 by goroutine 306:
+  6.5840/raft.(*Raft).RequestVote()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:203 +0x608
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+031139 LOG1 S6 收2拉，我term3,vf5,st1
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Previous read at 0x00c0001ac4c0 by goroutine 249:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:366 +0x264
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+031141 LOG1 S0 收2拉，我term3,vf5,st1
+Goroutine 306 (running) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+
+031142 LOG1 S3 收2拉，我term3,vf3,st2
+Goroutine 249 (finished) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+031143 LOG1 S5 我投票给2，term为4,我身份为1
+031144 LOG1 S0 我身份改为follower
+031144 LOG1 S5 我身份改为follower
+031145 LOG1 S0 我投票给2，term为4,我身份为1
+031145 LOG1 S0 我身份改为follower
+031149 LOG1 S3 我身份改为follower
+==================
+WARNING: DATA RACE
+Write at 0x00c0001ac578 by goroutine 310:
+  6.5840/raft.(*Raft).RequestVote()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:185 +0x280
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Previous read at 0x00c0001ac578 by goroutine 113:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:359 +0x184
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Goroutine 310 (running) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+
+Goroutine 113 (finished) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+031152 LOG1 S6 我身份改为follower
+031152 LOG1 S3 我投票给2，term为4,我身份为1
+031153 LOG1 S3 我身份改为follower
+031153 LOG1 S6 我投票给2，term为4,我身份为1
+031154 LOG1 S6 我身份改为follower
+031158 TERM S2 我成功当选，term为4
+031165 LOG1 S0 我收到2的心跳,我之前term为4
+031166 LOG1 S0 我为fw,term为4
+031172 LOG1 S0 我身份被查
+031172 LOG1 S2 我身份被查
+031173 LOG1 S3 我身份被查
+031173 LOG1 S5 我身份被查
+031173 LOG1 S6 我身份被查
+031724 LOG1 S0 我收到2的心跳,我之前term为4
+031725 LOG1 S0 我为fw,term为4
+031921 LOG1 S2 我收到0的心跳,我之前term为4
+032545 LOG1 S4 我超时了
+032547 LOG1 S4 我身份改为can
+032547 LOG1 S4 我开始选举，最新term为4
+032548 VOTE S4 我正在选举，我给1发消息
+032548 VOTE S4 我正在选举，我给0发消息
+032549 VOTE S4 我正在选举，我给3发消息
+032548 VOTE S4 我正在选举，我给5发消息
+032548 VOTE S4 我正在选举，我给2发消息
+032548 VOTE S4 我正在选举，我给6发消息
+032722 LOG1 S0 我收到2的心跳,我之前term为4
+032723 LOG1 S0 我为fw,term为4
+033235 LOG1 S1 我超时了
+033237 LOG1 S1 我身份改为can
+033237 LOG1 S1 我开始选举，最新term为4
+033238 VOTE S1 我正在选举，我给6发消息
+033238 VOTE S1 我正在选举，我给0发消息
+033238 VOTE S1 我正在选举，我给5发消息
+033238 VOTE S1 我正在选举，我给2发消息
+033238 VOTE S1 我正在选举，我给4发消息
+033238 VOTE S1 我正在选举，我给3发消息
+033727 LOG1 S0 我收到2的心跳,我之前term为4
+033729 LOG1 S0 我为fw,term为4
+034732 LOG1 S0 我收到2的心跳,我之前term为4
+034734 LOG1 S0 我为fw,term为4
+035735 LOG1 S0 我收到2的心跳,我之前term为4
+035737 LOG1 S0 我为fw,term为4
+035831 LOG1 S0 我身份被查
+035833 LOG1 S2 我身份被查
+035833 LOG1 S5 我身份被查
+035834 LOG1 S6 我身份被查
+037222 LOG1 S4 我收到2的心跳,我之前term为4
+037224 LOG1 S4 我为fw,term为4
+037940 LOG1 S6 我超时了
+037942 LOG1 S6 我身份改为can
+037942 LOG1 S6 我开始选举，最新term为5
+037943 VOTE S6 我正在选举，我给0发消息
+037943 VOTE S6 我正在选举，我给1发消息
+037943 VOTE S6 我正在选举，我给2发消息
+037944 VOTE S6 我正在选举，我给5发消息
+037945 VOTE S6 我正在选举，我给4发消息
+037945 VOTE S6 我正在选举，我给3发消息
+037947 LOG1 S1 收6拉，我term4,vf1,st2
+037948 LOG1 S1 我身份改为follower
+037948 LOG1 S2 收6拉，我term4,vf2,st0
+037948 LOG1 S4 收6拉，我term4,vf4,st1
+037949 LOG1 S2 我身份改为follower
+==================
+WARNING: DATA RACE
+Write at 0x00c0001ac1c0 by goroutine 399:
+  6.5840/raft.(*Raft).RequestVote()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:203 +0x608
+037949 LOG1 S2 我投票给6，term为5,我身份为1
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+037950 LOG1 S2 我身份改为follower
+
+Previous read at 0x00c0001ac1c0 by goroutine 134:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:359 +0x19c
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Goroutine 399 (running) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+
+Goroutine 134 (finished) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+037951 LOG1 S1 我投票给6，term为5,我身份为1
+037951 LOG1 S4 我身份改为follower
+037951 LOG1 S1 我身份改为follower
+037952 LOG1 S4 我投票给6，term为5,我身份为1
+037952 LOG1 S4 我身份改为follower
+037961 TERM S6 我成功当选，term为5
+038813 LOG1 S5 我超时了
+038816 LOG1 S5 我身份改为can
+038816 LOG1 S5 我开始选举，最新term为5
+038818 VOTE S5 我正在选举，我给6发消息
+038818 VOTE S5 我正在选举，我给2发消息
+038819 VOTE S5 我正在选举，我给1发消息
+038819 VOTE S5 我正在选举，我给4发消息
+038818 VOTE S5 我正在选举，我给0发消息
+038818 VOTE S5 我正在选举，我给3发消息
+039254 LOG1 S3 我超时了
+039257 LOG1 S3 我身份改为can
+039258 LOG1 S3 我开始选举，最新term为5
+039260 VOTE S3 我正在选举，我给0发消息
+039260 VOTE S3 我正在选举，我给4发消息
+039261 VOTE S3 我正在选举，我给5发消息
+039261 VOTE S3 我正在选举，我给2发消息
+039260 VOTE S3 我正在选举，我给1发消息
+039260 VOTE S3 我正在选举，我给6发消息
+040539 LOG1 S1 我身份被查
+040540 LOG1 S2 我身份被查
+040540 LOG1 S4 我身份被查
+040540 LOG1 S6 我身份被查
+040546 LOG1 S0 我收到6的心跳,我之前term为4
+040547 LOG1 S0 我为fw,term为5
+040557 LOG1 S1 我收到6的心跳,我之前term为5
+040558 LOG1 S1 我为fw,term为5
+040739 LOG1 S3 我收到6的心跳,我之前term为5
+040740 LOG1 S3 我为fw,term为5
+041319 LOG1 S3 我收到5的心跳,我之前term为5
+041553 LOG1 S0 我收到6的心跳,我之前term为5
+041555 LOG1 S0 我为fw,term为5
+041569 LOG1 S1 我收到6的心跳,我之前term为5
+041570 LOG1 S1 我为fw,term为5
+042564 LOG1 S0 我收到6的心跳,我之前term为5
+042566 LOG1 S0 我为fw,term为5
+042583 LOG1 S1 我收到6的心跳,我之前term为5
+042585 LOG1 S1 我为fw,term为5
+042863 LOG1 S1 我收到6的心跳,我之前term为5
+042864 LOG1 S1 我为fw,term为5
+043570 LOG1 S0 我收到6的心跳,我之前term为5
+043572 LOG1 S0 我为fw,term为5
+043581 LOG1 S1 我收到6的心跳,我之前term为5
+043582 LOG1 S1 我为fw,term为5
+044584 LOG1 S0 我收到6的心跳,我之前term为5
+044586 LOG1 S0 我为fw,term为5
+044600 LOG1 S1 我收到6的心跳,我之前term为5
+044602 LOG1 S1 我为fw,term为5
+045069 LOG1 S0 我身份被查
+045071 LOG1 S1 我身份被查
+045071 LOG1 S3 我身份被查
+045072 LOG1 S5 我身份被查
+045073 LOG1 S6 我身份被查
+045494 LOG1 S2 我超时了
+045496 LOG1 S2 我身份改为can
+045496 LOG1 S2 我开始选举，最新term为6
+045497 VOTE S2 我正在选举，我给0发消息
+045497 VOTE S2 我正在选举，我给5发消息
+045498 VOTE S2 我正在选举，我给6发消息
+045497 VOTE S2 我正在选举，我给1发消息
+045497 VOTE S2 我正在选举，我给3发消息
+045498 VOTE S2 我正在选举，我给4发消息
+045504 LOG1 S0 收2拉，我term5,vf2,st1
+045504 LOG1 S0 我身份改为follower
+045505 LOG1 S6 收2拉，我term5,vf6,st0
+045505 LOG1 S6 我身份改为follower
+045505 LOG1 S1 收2拉，我term5,vf6,st1
+045505 LOG1 S0 我投票给2，term为6,我身份为1
+045506 LOG1 S6 我投票给2，term为6,我身份为1
+045507 LOG1 S6 我身份改为follower
+045508 LOG1 S4 收2拉，我term5,vf6,st1
+045506 LOG1 S1 我身份改为follower
+045507 LOG1 S0 我身份改为follower
+045508 LOG1 S4 我身份改为follower
+045509 LOG1 S1 我投票给2，term为6,我身份为1
+045510 LOG1 S4 我投票给2，term为6,我身份为1
+045510 LOG1 S1 我身份改为follower
+045511 LOG1 S4 我身份改为follower
+045515 TERM S2 我成功当选，term为6
+045524 LOG1 S0 我收到2的心跳,我之前term为6
+045524 LOG1 S0 我为fw,term为6
+045536 LOG1 S1 我收到2的心跳,我之前term为6
+045536 LOG1 S1 我为fw,term为6
+045972 LOG1 S4 我收到6的心跳,我之前term为6
+046016 LOG1 S0 我收到2的心跳,我之前term为6
+046017 LOG1 S0 我为fw,term为6
+046030 LOG1 S1 我收到2的心跳,我之前term为6
+046031 LOG1 S1 我为fw,term为6
+046449 LOG1 S5 我超时了
+046452 LOG1 S5 我身份改为can
+046453 LOG1 S5 我开始选举，最新term为6
+046456 VOTE S5 我正在选举，我给0发消息
+046456 VOTE S5 我正在选举，我给4发消息
+046457 VOTE S5 我正在选举，我给6发消息
+046456 VOTE S5 我正在选举，我给1发消息
+046457 VOTE S5 我正在选举，我给2发消息
+046456 VOTE S5 我正在选举，我给3发消息
+047025 LOG1 S0 我收到2的心跳,我之前term为6
+047027 LOG1 S0 我为fw,term为6
+047040 LOG1 S1 我收到2的心跳,我之前term为6
+047041 LOG1 S1 我为fw,term为6
+048033 LOG1 S0 我收到2的心跳,我之前term为6
+048035 LOG1 S0 我为fw,term为6
+048048 LOG1 S1 我收到2的心跳,我之前term为6
+048049 LOG1 S1 我为fw,term为6
+048740 LOG1 S3 我超时了
+048742 LOG1 S3 我身份改为can
+048743 LOG1 S3 我开始选举，最新term为6
+048744 VOTE S3 我正在选举，我给4发消息
+048745 VOTE S3 我正在选举，我给5发消息
+048744 VOTE S3 我正在选举，我给0发消息
+048745 VOTE S3 我正在选举，我给1发消息
+048745 VOTE S3 我正在选举，我给2发消息
+048745 VOTE S3 我正在选举，我给6发消息
+048910 LOG1 S1 我收到6的心跳,我之前term为6
+048926 LOG1 S2 我收到6的心跳,我之前term为6
+049042 LOG1 S0 我收到2的心跳,我之前term为6
+049044 LOG1 S0 我为fw,term为6
+049060 LOG1 S1 我收到2的心跳,我之前term为6
+==================
+WARNING: DATA RACE
+Write at 0x00c0001ac1b8 by goroutine 583:
+  6.5840/raft.(*Raft).AppendEntries()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:269 +0x270
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Previous read at 0x00c0001ac1b8 by goroutine 349:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:359 +0x184
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Goroutine 583 (running) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+
+Goroutine 349 (finished) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+049065 LOG1 S1 我为fw,term为6
+049979 LOG1 S0 我身份被查
+049980 LOG1 S1 我身份被查
+049981 LOG1 S2 我身份被查
+049981 LOG1 S4 我身份被查
+049982 LOG1 S6 我身份被查
+050051 LOG1 S0 我收到2的心跳,我之前term为6
+050052 LOG1 S0 我为fw,term为6
+050065 LOG1 S1 我收到2的心跳,我之前term为6
+050066 LOG1 S1 我为fw,term为6
+050090 LOG1 S3 我收到2的心跳,我之前term为6
+050091 LOG1 S3 我为fw,term为6
+051057 LOG1 S0 我收到2的心跳,我之前term为6
+051058 LOG1 S0 我为fw,term为6
+051070 LOG1 S1 我收到2的心跳,我之前term为6
+051072 LOG1 S1 我为fw,term为6
+051082 LOG1 S3 我收到2的心跳,我之前term为6
+051084 LOG1 S3 我为fw,term为6
+052058 LOG1 S0 我收到2的心跳,我之前term为6
+052060 LOG1 S0 我为fw,term为6
+052073 LOG1 S1 我收到2的心跳,我之前term为6
+052075 LOG1 S1 我为fw,term为6
+052085 LOG1 S3 我收到2的心跳,我之前term为6
+052087 LOG1 S3 我为fw,term为6
+052583 LOG1 S6 我超时了
+052584 LOG1 S6 我身份改为can
+052585 LOG1 S6 我开始选举，最新term为7
+052585 VOTE S6 我正在选举，我给0发消息
+052585 VOTE S6 我正在选举，我给1发消息
+052586 VOTE S6 我正在选举，我给4发消息
+052586 VOTE S6 我正在选举，我给5发消息
+052586 VOTE S6 我正在选举，我给2发消息
+052586 VOTE S6 我正在选举，我给3发消息
+052590 LOG1 S1 收6拉，我term6,vf2,st1
+052591 LOG1 S2 收6拉，我term6,vf2,st0
+052591 LOG1 S1 我身份改为follower
+052591 LOG1 S2 我身份改为follower
+052590 LOG1 S0 收6拉，我term6,vf2,st1
+052592 LOG1 S1 我投票给6，term为7,我身份为1
+052592 LOG1 S1 我身份改为follower
+052592 LOG1 S0 我身份改为follower
+052592 LOG1 S3 收6拉，我term6,vf3,st1
+052593 LOG1 S0 我投票给6，term为7,我身份为1
+052593 LOG1 S3 我身份改为follower
+052593 LOG1 S0 我身份改为follower
+052593 LOG1 S2 我投票给6，term为7,我身份为1
+052594 LOG1 S2 我身份改为follower
+052594 LOG1 S3 我投票给6，term为7,我身份为1
+052594 LOG1 S3 我身份改为follower
+==================
+WARNING: DATA RACE
+Read at 0x00c0006875a8 by goroutine 622:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:369 +0x2c0
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Previous write at 0x00c0006875a8 by goroutine 625:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:367 +0x290
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Goroutine 622 (running) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+
+Goroutine 625 (running) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+==================
+WARNING: DATA RACE
+Read at 0x00c0001ac578 by goroutine 622:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:369 +0x308
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Previous write at 0x00c0001ac578 by goroutine 625:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:371 +0x338
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Goroutine 622 (running) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+
+Goroutine 625 (running) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+052597 TERM S6 我成功当选，term为7
+052616 LOG1 S0 我收到6的心跳,我之前term为7
+052617 LOG1 S0 我为fw,term为7
+052630 LOG1 S1 我收到6的心跳,我之前term为7
+052632 LOG1 S1 我为fw,term为7
+052642 LOG1 S2 我收到6的心跳,我之前term为7
+052643 LOG1 S2 我为fw,term为7
+052659 LOG1 S3 我收到6的心跳,我之前term为7
+052660 LOG1 S3 我为fw,term为7
+053167 LOG1 S0 我收到6的心跳,我之前term为7
+053169 LOG1 S0 我为fw,term为7
+053185 LOG1 S1 我收到6的心跳,我之前term为7
+053187 LOG1 S1 我为fw,term为7
+053198 LOG1 S2 我收到6的心跳,我之前term为7
+053199 LOG1 S2 我为fw,term为7
+053208 LOG1 S3 我收到6的心跳,我之前term为7
+053209 LOG1 S3 我为fw,term为7
+053297 LOG1 S4 我超时了
+==================
+WARNING: DATA RACE
+Write at 0x00c0001ac3f8 by goroutine 659:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:334 +0x3c
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+
+Previous read at 0x00c0001ac3f8 by goroutine 237:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:359 +0x184
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Goroutine 659 (running) created at:
+  6.5840/raft.(*Raft).ticker()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x354
+  6.5840/raft.Make.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:463 +0x34
+
+Goroutine 237 (finished) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+053302 LOG1 S4 我身份改为can
+053303 LOG1 S4 我开始选举，最新term为7
+053303 VOTE S4 我正在选举，我给0发消息
+053304 VOTE S4 我正在选举，我给3发消息
+053303 VOTE S4 我正在选举，我给2发消息
+053304 VOTE S4 我正在选举，我给5发消息
+053304 VOTE S4 我正在选举，我给1发消息
+053304 VOTE S4 我正在选举，我给6发消息
+054126 LOG1 S5 我超时了
+054135 LOG1 S5 我身份改为can
+054135 LOG1 S5 我开始选举，最新term为7
+054140 VOTE S5 我正在选举，我给6发消息
+054141 VOTE S5 我正在选举，我给1发消息
+054149 VOTE S5 我正在选举，我给3发消息
+054141 VOTE S5 我正在选举，我给0发消息
+054143 VOTE S5 我正在选举，我给4发消息
+054145 VOTE S5 我正在选举，我给2发消息
+054198 LOG1 S0 我收到6的心跳,我之前term为7
+054200 LOG1 S0 我为fw,term为7
+054426 LOG1 S1 我收到6的心跳,我之前term为7
+054430 LOG1 S1 我为fw,term为7
+054502 LOG1 S2 我收到6的心跳,我之前term为7
+054503 LOG1 S2 我为fw,term为7
+054513 LOG1 S3 我收到6的心跳,我之前term为7
+054515 LOG1 S3 我为fw,term为7
+054868 LOG1 S0 我身份被查
+054870 LOG1 S1 我身份被查
+054870 LOG1 S2 我身份被查
+054870 LOG1 S3 我身份被查
+054870 LOG1 S6 我身份被查
+059745 LOG1 S2 我身份被查
+059749 LOG1 S4 我身份被查
+059750 LOG1 S5 我身份被查
+059750 LOG1 S6 我身份被查
+059806 LOG1 S1 我收到6的心跳,我之前term为7
+059818 LOG1 S2 我收到6的心跳,我之前term为7
+059829 LOG1 S3 我收到6的心跳,我之前term为7
+059841 LOG1 S4 我收到6的心跳,我之前term为7
+059852 LOG1 S5 我收到6的心跳,我之前term为7
+060141 LOG1 S4 我收到0的心跳,我之前term为7
+060153 LOG1 S5 我收到0的心跳,我之前term为7
+060165 LOG1 S6 我收到0的心跳,我之前term为7
+060220 LOG1 S0 我收到6的心跳,我之前term为7
+060221 LOG1 S0 我为fw,term为7
+060233 LOG1 S1 我收到6的心跳,我之前term为7
+060234 LOG1 S1 我为fw,term为7
+060246 LOG1 S2 我收到6的心跳,我之前term为7
+060247 LOG1 S2 我为fw,term为7
+060256 LOG1 S3 我收到6的心跳,我之前term为7
+060257 LOG1 S3 我为fw,term为7
+060266 LOG1 S4 我收到6的心跳,我之前term为7
+060266 LOG1 S4 我为fw,term为7
+060273 LOG1 S5 我收到6的心跳,我之前term为7
+==================
+WARNING: DATA RACE
+Write at 0x00c0001ac4c0 by goroutine 752:
+  6.5840/raft.(*Raft).AppendEntries()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:270 +0x298
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Previous read at 0x00c0001ac4c0 by goroutine 148:
+  6.5840/raft.(*Raft).startElection.func1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:359 +0x19c
+  6.5840/raft.(*Raft).startElection.gowrap1()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:377 +0x44
+
+Goroutine 752 (running) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+
+Goroutine 148 (finished) created at:
+  6.5840/raft.(*Raft).startElection()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:353 +0x524
+  6.5840/raft.(*Raft).ticker.gowrap2()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:419 +0x34
+==================
+060276 LOG1 S5 我为fw,term为7
+060432 LOG1 S1 我收到6的心跳,我之前term为7
+060445 LOG1 S2 我收到6的心跳,我之前term为7
+060456 LOG1 S3 我收到6的心跳,我之前term为7
+060466 LOG1 S4 我收到6的心跳,我之前term为7
+060475 LOG1 S5 我收到6的心跳,我之前term为7
+061412 LOG1 S0 我收到6的心跳,我之前term为7
+061417 LOG1 S0 我为fw,term为7
+061463 LOG1 S1 我收到6的心跳,我之前term为7
+061470 LOG1 S1 我为fw,term为7
+061486 LOG1 S2 我收到6的心跳,我之前term为7
+061488 LOG1 S2 我为fw,term为7
+061530 LOG1 S3 我收到6的心跳,我之前term为7
+061540 LOG1 S3 我为fw,term为7
+061552 LOG1 S4 我收到6的心跳,我之前term为7
+061553 LOG1 S4 我为fw,term为7
+061564 LOG1 S5 我收到6的心跳,我之前term为7
+061567 LOG1 S5 我为fw,term为7
+061709 LOG1 S2 我收到0的心跳,我之前term为7
+061718 LOG1 S3 我收到0的心跳,我之前term为7
+061722 LOG1 S4 我收到0的心跳,我之前term为7
+061727 LOG1 S5 我收到0的心跳,我之前term为7
+061733 LOG1 S6 我收到0的心跳,我之前term为7
+062091 LOG1 S3 我收到2的心跳,我之前term为7
+062111 LOG1 S6 我收到5的心跳,我之前term为7
+062126 LOG1 S4 我收到2的心跳,我之前term为7
+062141 LOG1 S5 我收到2的心跳,我之前term为7
+062152 LOG1 S6 我收到2的心跳,我之前term为7
+062233 LOG1 S0 我收到6的心跳,我之前term为7
+062236 LOG1 S0 我为fw,term为7
+062257 LOG1 S1 我收到6的心跳,我之前term为7
+062259 LOG1 S1 我为fw,term为7
+062271 LOG1 S2 我收到6的心跳,我之前term为7
+062274 LOG1 S2 我为fw,term为7
+062291 LOG1 S3 我收到6的心跳,我之前term为7
+062292 LOG1 S3 我为fw,term为7
+062302 LOG1 S4 我收到6的心跳,我之前term为7
+062304 LOG1 S4 我为fw,term为7
+062313 LOG1 S5 我收到6的心跳,我之前term为7
+062315 LOG1 S5 我为fw,term为7
+063236 LOG1 S0 我收到6的心跳,我之前term为7
+063236 LOG1 S0 我为fw,term为7
+063247 LOG1 S1 我收到6的心跳,我之前term为7
+063249 LOG1 S1 我为fw,term为7
+063263 LOG1 S2 我收到6的心跳,我之前term为7
+063264 LOG1 S2 我为fw,term为7
+063270 LOG1 S3 我收到6的心跳,我之前term为7
+063271 LOG1 S3 我为fw,term为7
+063276 LOG1 S4 我收到6的心跳,我之前term为7
+063277 LOG1 S4 我为fw,term为7
+063283 LOG1 S5 我收到6的心跳,我之前term为7
+063283 LOG1 S3 我收到0的心跳,我之前term为7
+063284 LOG1 S5 我为fw,term为7
+063290 LOG1 S4 我收到0的心跳,我之前term为7
+063297 LOG1 S5 我收到0的心跳,我之前term为7
+063304 LOG1 S6 我收到0的心跳,我之前term为7
+064068 LOG1 S5 我收到2的心跳,我之前term为7
+064076 LOG1 S6 我收到2的心跳,我之前term为7
+064234 LOG1 S0 我收到6的心跳,我之前term为7
+064235 LOG1 S0 我为fw,term为7
+064239 LOG1 S1 我收到6的心跳,我之前term为7
+064240 LOG1 S1 我为fw,term为7
+064245 LOG1 S2 我收到6的心跳,我之前term为7
+064246 LOG1 S2 我为fw,term为7
+064257 LOG1 S3 我收到6的心跳,我之前term为7
+064259 LOG1 S3 我为fw,term为7
+064264 LOG1 S4 我收到6的心跳,我之前term为7
+064265 LOG1 S4 我为fw,term为7
+064272 LOG1 S5 我收到6的心跳,我之前term为7
+064273 LOG1 S5 我为fw,term为7
+==================
+WARNING: DATA RACE
+Read at 0x00c0001ac100 by goroutine 6:
+  6.5840/raft.(*Raft).GetState()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:101 +0x30
+  6.5840/raft.(*config).checkOneLeader()
+      /Users/Zhuanz/6.5840/src/raft/config.go:438 +0x220
+  6.5840/raft.TestManyElections3A()
+      /Users/Zhuanz/6.5840/src/raft/test_test.go:121 +0x1b4
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.(*T).Run.gowrap1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x40
+
+Previous write at 0x00c0001ac100 by goroutine 849:
+  6.5840/raft.(*Raft).AppendEntries()
+      /Users/Zhuanz/6.5840/src/raft/raft.go:270 +0x298
+  runtime.call32()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/runtime/asm_arm64.s:505 +0x74
+  reflect.Value.Call()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x90
+  6.5840/labrpc.(*Service).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x38c
+  6.5840/labrpc.(*Server).dispatch()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x1f0
+  6.5840/labrpc.(*Network).processReq.func1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x84
+
+Goroutine 6 (running) created at:
+  testing.(*T).Run()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1743 +0x5e0
+  testing.runTests.func1()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:2168 +0x80
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:1690 +0x184
+  testing.runTests()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:2166 +0x6e0
+  testing.(*M).Run()
+      /opt/homebrew/Cellar/go/1.23.4/libexec/src/testing/testing.go:2034 +0xb74
+  main.main()
+      _testmain.go:99 +0x110
+
+Goroutine 849 (finished) created at:
+  6.5840/labrpc.(*Network).processReq()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x20c
+  6.5840/labrpc.MakeNetwork.func1.gowrap1()
+      /Users/Zhuanz/6.5840/src/labrpc/labrpc.go:157 +0x84
+==================
+065088 LOG1 S0 我身份被查
+065088 LOG1 S1 我身份被查
+065089 LOG1 S2 我身份被查
+065089 LOG1 S3 我身份被查
+065089 LOG1 S4 我身份被查
+065089 LOG1 S5 我身份被查
+065090 LOG1 S6 我身份被查
+--- FAIL: TestManyElections3A (6.51s)
+    testing.go:1399: race detected during execution of test
+FAIL
+exit status 1
+FAIL	6.5840/raft	6.772s
