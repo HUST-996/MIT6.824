@@ -1,0 +1,36 @@
+Test (3B): basic agreement ...
+  ... Passed --   1.5  3   18    5087    3
+Test (3B): RPC byte count ...
+  ... Passed --   3.5  3   58  172283   11
+Test (3B): test progressive failure of followers ...
+  ... Passed --   5.4  3  129   30433    3
+Test (3B): test failure of leaders ...
+  ... Passed --   6.5  3  273   63712    3
+Test (3B): agreement after follower reconnects ...
+  ... Passed --   5.1  3  124   35442    7
+Test (3B): no agreement if too many followers disconnect ...
+  ... Passed --   4.3  5  210   51608    3
+Test (3B): concurrent Start()s ...
+  ... Passed --   1.3  3   16    4664    6
+Test (3B): rejoin of partitioned leader ...
+  ... Passed --   7.4  3  308   85900    4
+Test (3B): leader backs up quickly over incorrect follower logs ...
+panic: runtime error: index out of range [102] with length 55
+
+goroutine 24713 [running]:
+6.5840/raft.(*Raft).RequestVote(0x14000187930, 0x14001226da0, 0x14000840990?)
+	/Users/Zhuanz/6.5840/src/raft/raft.go:200 +0x278
+reflect.Value.call({0x14000154500?, 0x1400004e8a8?, 0x140012d9af8?}, {0x1005878fc, 0x4}, {0x140012d9d10, 0x3, 0x100577ecc?})
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:581 +0x97c
+reflect.Value.Call({0x14000154500?, 0x1400004e8a8?, 0x14000f7c9e8?}, {0x140012d9d10?, 0x140002bd398?, 0x1003aefd4?})
+	/opt/homebrew/Cellar/go/1.23.4/libexec/src/reflect/value.go:365 +0x94
+6.5840/labrpc.(*Service).dispatch(0x140002b05c0, {0x10058a73c, 0xb}, {{0x1005f8500, 0x14000203210}, {0x10058a737, 0x10}, {0x10064aa10, 0x1005f0800}, {0x14001383080, ...}, ...})
+	/Users/Zhuanz/6.5840/src/labrpc/labrpc.go:506 +0x288
+6.5840/labrpc.(*Server).dispatch(0x140001c20c0, {{0x1005f8500, 0x14000203210}, {0x10058a737, 0x10}, {0x10064aa10, 0x1005f0800}, {0x14001383080, 0x64, 0xc0}, ...})
+	/Users/Zhuanz/6.5840/src/labrpc/labrpc.go:430 +0x21c
+6.5840/labrpc.(*Network).processReq.func1()
+	/Users/Zhuanz/6.5840/src/labrpc/labrpc.go:240 +0x54
+created by 6.5840/labrpc.(*Network).processReq in goroutine 24712
+	/Users/Zhuanz/6.5840/src/labrpc/labrpc.go:239 +0x1a8
+exit status 2
+FAIL	6.5840/raft	68.475s

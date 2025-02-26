@@ -453,11 +453,7 @@ func (rf *Raft) sendHeartBeatToOne(server int) {
 		Entries:      entries,
 	}
 	reply := &AppendEntriesReply{}
-	ok := false
-	for !ok {
-		ok = rf.sendAppendEntries(server, args, reply)
-		time.Sleep(100 * time.Millisecond)
-	}
+	rf.sendAppendEntries(server, args, reply)
 	rf.mu.Lock()
 	if reply.Success {
 		rf.matchIndex[server] = preLogIndex + len(entries)
